@@ -9,6 +9,7 @@ const HistoricalFact = ({ onBack }) => {
   const [error, setError] = useState(null);
   const mapRef = useRef(null);
   const [mapLoaded, setMapLoaded] = useState(false);
+  const [collapsed, setCollapsed] = useState(false);
 
   useEffect(() => {
     // Set a timeout to ensure map container is fully rendered
@@ -74,6 +75,10 @@ const HistoricalFact = ({ onBack }) => {
     }
   };
 
+  const toggleCollapse = () => {
+    setCollapsed(!collapsed);
+  };
+
   return (
     <div className="explorer-container">
       {/* Full-screen map container */}
@@ -95,83 +100,101 @@ const HistoricalFact = ({ onBack }) => {
       </button>
 
       {/* Controls and info card */}
-      <div className="info-card-container">
-        <div className="info-card">
-          {!event && !spinning && !error ? (
-            <div className="card-content">
-              <h2>Ready to Explore?</h2>
-              <p>
-                Click the button below to discover a random historical location!
-              </p>
-              <button className="primary-button" onClick={fetchFact}>
-                Get a Random Historical Fact
-              </button>
-            </div>
-          ) : spinning ? (
-            <div className="card-content loading">
-              <div className="loading-indicator">
-                <div className="spinner"></div>
-                <h2>Spinning the globe...</h2>
-              </div>
-              <p>Searching for an interesting historical location...</p>
-            </div>
-          ) : error ? (
-            <div className="card-content error">
-              <h2>Oops!</h2>
-              <p>{error}</p>
-              <button className="primary-button" onClick={fetchFact}>
-                Try Again
-              </button>
-            </div>
-          ) : (
-            <div>
-              {/* Fact card header */}
-              <div className="card-header">
-                <h2>{event.title}</h2>
-              </div>
+      <div className={`info-card-container ${collapsed ? "collapsed" : ""}`}>
+        {event && (
+          <button onClick={toggleCollapse} className="collapse-button">
+            {collapsed ? "Expand" : "Collapse"}
+          </button>
+        )}
 
-              {/* Fact card content */}
-              <div className="card-body">
-                <div className="card-content-flex">
-                  {event.image && (
-                    <img
-                      src={event.image}
-                      alt={event.title}
-                      className="event-image"
-                    />
-                  )}
-                  <div className="event-description">
-                    <p>{event.description}</p>
-                    <a
-                      href={event.wikiUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="wiki-link"
-                    >
-                      Read More on Wikipedia
-                    </a>
+        {!collapsed && (
+          <>
+            {!event && !spinning && !error ? (
+              <div className="card-content">
+                <h2>Ready to Explore?</h2>
+                <p>
+                  Click the button below to discover a random interesting or
+                  historical place or event!
+                </p>
+                <button className="primary-button" onClick={fetchFact}>
+                  Start Exploring
+                </button>
+              </div>
+            ) : spinning ? (
+              <div className="card-content loading">
+                <div className="loading-indicator">
+                  <div className="spinner"></div>
+                  <h2>Spinning the globe...</h2>
+                </div>
+                <p>Searching for an interesting location...</p>
+              </div>
+            ) : error ? (
+              <div className="card-content error">
+                <h2>Oops!</h2>
+                <p>{error}</p>
+                <button className="primary-button" onClick={fetchFact}>
+                  Try Again
+                </button>
+              </div>
+            ) : (
+              <div>
+                {/* Fact card header */}
+                <div className="card-header">
+                  <h2>{event.title}</h2>
+                </div>
+
+                {/* Fact card content */}
+                <div className="card-body">
+                  <div className="card-content-flex">
+                    {event.image && (
+                      <img
+                        src={event.image}
+                        alt={event.title}
+                        className="event-image"
+                      />
+                    )}
+                    <div className="event-description">
+                      <p>{event.description}</p>
+                      <a
+                        href={event.wikiUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="wiki-link"
+                      >
+                        Read More on Wikipedia
+                      </a>
+                    </div>
                   </div>
                 </div>
-              </div>
 
-              {/* Fact card footer */}
-              <div className="card-footer">
-                <button className="primary-button" onClick={fetchFact}>
-                  Get Another Fact
-                </button>
-                <span className="coordinates">
-                  {event.lat && event.lon ? (
-                    <>
-                      Location: {event.lat.toFixed(2)}°, {event.lon.toFixed(2)}°
-                    </>
-                  ) : (
-                    "Location data unavailable"
-                  )}
-                </span>
+                {/* Fact card footer */}
+                <div className="card-footer">
+                  <button className="primary-button" onClick={fetchFact}>
+                    Get Another Fact
+                  </button>
+                  <span className="coordinates">
+                    {event.lat && event.lon ? (
+                      <>
+                        Location: {event.lat.toFixed(2)}°,{" "}
+                        {event.lon.toFixed(2)}°
+                      </>
+                    ) : (
+                      "Location data unavailable"
+                    )}
+                  </span>
+                </div>
               </div>
-            </div>
-          )}
-        </div>
+            )}
+          </>
+        )}
+        {collapsed && event && (
+          <div className="mini-card">
+            <h3>{event.title}</h3>
+            <span className="mini-coordinates">
+              {event.lat.toFixed(2)}°, {event.lon.toFixed(2)}°
+            </span>
+          </div>
+        )}
       </div>
     </div>
   );

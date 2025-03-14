@@ -14,10 +14,10 @@ function App() {
       <div className="overlay"></div>
 
       <div className="landing-content">
-        <h1>Historical Explorer</h1>
+        <h1>TimeTrek</h1>
         <p>
-          Discover random historical places and events from around the world
-          with just one click.
+          Discover random interesting or historical places and events from
+          around the world with just one click.
         </p>
         <button
           className="primary-button"

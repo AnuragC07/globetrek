@@ -1,115 +1,174 @@
-/* HistoricalFact.css */
 .explorer-container {
-    height: 100vh;
-    width: 100vw;
     position: relative;
+    width: 100%;
+    height: 100vh;
     overflow: hidden;
 }
 
 .map-container {
     position: absolute;
-    inset: 0;
-    height: 100vh;
-    width: 100vw;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
 }
 
 .back-button {
     position: absolute;
     top: 100px;
     left: 10px;
-    z-index: 1000;
-    background-color: white;
+    z-index: 10;
+    background-color: rgba(255, 255, 255, 0.8);
     border: none;
-    border-radius: 12px;
-    width: 80px;
-    height: 60px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    padding: 8px 12px;
+    border-radius: 4px;
     cursor: pointer;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-    transition: background-color 0.2s;
-}
-
-.back-button:hover {
-    background-color: #f0f0f0;
+    font-weight: bold;
+    border-width: 2px;
+    border-color: #989898;
 }
 
 .info-card-container {
     position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    z-index: 1000;
-    display: flex;
-    justify-content: center;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 90%;
+    max-width: 600px;
+    z-index: 10;
+    transition: all 0.3s ease-in-out;
+    background: white;
+    border-radius: 20px;
+}
+
+/* Collapsed state */
+.info-card-container.collapsed {
+    width: auto;
+    max-width: 250px;
 }
 
 .info-card {
-    background-color: white;
-    border-radius: 8px 8px 0 0;
-    box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
-    width: 100%;
-    max-width: 800px;
+    background-color: rgba(255, 255, 255, 0.9);
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    overflow: hidden;
+    transition: all 0.3s ease-in-out;
+    max-height: 600px;
+    /* Set a maximum height */
+}
+
+.collapse-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    z-index: 15;
+    background-color: rgba(0, 0, 0, 0.6);
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.8rem;
+}
+
+.card-header {
+    padding: 15px 20px;
+    border-bottom: 1px solid #eee;
+}
+
+.card-header h2 {
+    margin: 0;
+    font-size: 1.5rem;
+}
+
+.card-body {
+    padding: 15px 20px;
+    overflow-y: auto;
+    /* Make the card-body scrollable */
+    max-height: 300px;
+    /* Set a maximum height for the card-body */
 }
 
 .card-content {
     padding: 20px;
     text-align: center;
-}
-
-.card-content h2 {
-    font-size: 1.5rem;
-    margin-bottom: 1rem;
-}
-
-.card-content p {
-    margin-bottom: 1.5rem;
-}
-
-.card-header {
-    background-color: #3b82f6;
-    color: white;
-    padding: 15px 20px;
-    border-radius: 8px 8px 0 0;
-}
-
-.card-header h2 {
-    margin: 0;
-    font-size: 1.25rem;
-}
-
-.card-body {
-    padding: 20px;
-    max-height: 60vh;
-    overflow-y: auto;
+    height: 200px;
+    background: white;
+    border-radius: 20px;
 }
 
 .card-content-flex {
     display: flex;
     flex-direction: column;
+    gap: 15px;
+    align-items: flex-start;
 }
 
 .event-image {
-    width: 100%;
-    max-width: 300px;
-    height: auto;
-    object-fit: cover;
+    max-width: 200px;
     border-radius: 4px;
-    margin-bottom: 1rem;
 }
 
 .event-description {
     flex: 1;
 }
 
-.event-description p {
-    margin-bottom: 1rem;
-    line-height: 1.5;
+.card-footer {
+    padding: 15px 20px;
+    border-top: 1px solid #eee;
+    display: flex;
+    justify-content: space-between;
+    /* align-items: center; */
+    gap: 20px;
+}
+
+.primary-button {
+    background-color: #e5d57e;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+.primary-button:hover {
+    background-color: #b5a342;
+}
+
+.loading-indicator {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+.spinner {
+    width: 24px;
+    height: 24px;
+    border: 3px solid rgba(0, 0, 0, 0.1);
+    border-radius: 50%;
+    border-top-color: #e5d57e;
+    animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+.coordinates {
+    color: #666;
+    font-size: 0.9rem;
 }
 
 .wiki-link {
-    color: #3b82f6;
+    display: inline-block;
+    margin-top: 10px;
+    color: #9a8a31;
     text-decoration: none;
 }
 
@@ -117,73 +176,23 @@
     text-decoration: underline;
 }
 
-.card-footer {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 15px 20px;
-    background-color: #f5f5f5;
-    border-top: 1px solid #e0e0e0;
+/* Mini card for collapsed state */
+.mini-card {
+    padding: 10px 15px;
+    text-align: left;
+    width: 300px;
 }
 
-.coordinates {
-    font-size: 0.875rem;
+.mini-card h3 {
+    margin: 0 0 5px 0;
+    font-size: 1rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 200px;
+}
+
+.mini-coordinates {
+    font-size: 0.8rem;
     color: #666;
-}
-
-.loading-indicator {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    justify-content: center;
-    margin-bottom: 1rem;
-}
-
-.spinner {
-    border: 3px solid rgba(0, 0, 0, 0.1);
-    border-radius: 50%;
-    border-top: 3px solid #3b82f6;
-    width: 24px;
-    height: 24px;
-    animation: spin 1s linear infinite;
-    margin-right: 10px;
-}
-
-@keyframes spin {
-    0% {
-        transform: rotate(0deg);
-    }
-
-    100% {
-        transform: rotate(360deg);
-    }
-}
-
-.loading h2 {
-    color: #3b82f6;
-}
-
-.error h2 {
-    color: #dc2626;
-    margin-bottom: 0.5rem;
-}
-
-/* Media queries for better mobile support */
-@media (min-width: 768px) {
-    .card-content-flex {
-        flex-direction: row;
-    }
-
-    .event-image {
-        width: 200px;
-        height: 200px;
-        margin-right: 20px;
-        margin-bottom: 0;
-    }
-}
-
-/* Make sure the leaflet container takes up the full space */
-.leaflet-container {
-    width: 100%;
-    height: 100%;
 }

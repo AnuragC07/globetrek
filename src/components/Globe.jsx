@@ -16,7 +16,7 @@ const Globe = ({ lat, lon, title, spinning, mapRef }) => {
       const map = L.map(mapContainerRef.current).setView([20, 0], 2);
 
       L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
-        attribution: "&copy; OpenStreetMap contributors",
+        // attribution: "&copy; OpenStreetMap contributors",
       }).addTo(map);
 
       mapRef.current = map;
