@@ -7,7 +7,7 @@ const MapMover = ({ lat, lon, title, spinning, mapRef }) => {
 
   useEffect(() => {
     if (!mapRef.current) {
-      mapRef.current = map; // Store map reference
+      mapRef.current = map;
     }
 
     if (spinning) {
