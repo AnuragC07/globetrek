@@ -1,11 +1,31 @@
+import { useState } from "react";
 import HistoricalFact from "./components/HistoricalFact";
+import "./App.css"; // We'll create this CSS file
 
 function App() {
-  //landing page
+  const [showExplorer, setShowExplorer] = useState(false);
+
+  if (showExplorer) {
+    return <HistoricalFact onBack={() => setShowExplorer(false)} />;
+  }
+
   return (
-    <div className="flex flex-col items-center p-6">
-      <h1 className="text-3xl font-bold mb-4">Historical Explorer</h1>
-      <HistoricalFact />
+    <div className="landing-page">
+      <div className="overlay"></div>
+
+      <div className="landing-content">
+        <h1>Historical Explorer</h1>
+        <p>
+          Discover random historical places and events from around the world
+          with just one click.
+        </p>
+        <button
+          className="primary-button"
+          onClick={() => setShowExplorer(true)}
+        >
+          Pick a Random Fact
+        </button>
+      </div>
     </div>
   );
 }
