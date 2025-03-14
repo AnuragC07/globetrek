@@ -14,7 +14,7 @@ function App() {
       <div className="overlay"></div>
 
       <div className="landing-content">
-        <h1>TimeTrek</h1>
+        <h1>GlobeTrek</h1>
         <p>
           Discover random interesting or historical places and events from
           around the world with just one click.
